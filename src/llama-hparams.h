@@ -203,6 +203,7 @@ struct llama_hparams {
     uint32_t loop_core_end   = 0;
     uint32_t loop_n_pass     = 0; // < 2: no loop
     uint32_t loop_gate_rank  = 0; // inkling2
+    bool     loop_last_kv    = false;
     float    kda_gate_lower_bound = -INFINITY;
     float    situ_beta            = 1.0f;
     float    situ_linear_beta     = 0.0f;   // 0 = no linear-beta transform on the up branch

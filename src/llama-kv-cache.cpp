@@ -181,6 +181,16 @@ llama_kv_cache::llama_kv_cache(
             continue;
         }
 
+        if (hparams.loop_last_kv) {
+            const uint32_t first = hparams.loop_visit(hparams.loop_layer(il));
+            if (first != il) {
+                // Each pass writes only this ubatch's slots before attention. Earlier positions retain the last pass's K/V.
+                // The final pass overwrites the intermediate rows. Convolution state remains private to each visit.
+                map_layer_ids[il] = map_layer_ids.at(first);
+                continue;
+            }
+        }
+
         if (share && other) {
             const int32_t il_share = share(il);
 

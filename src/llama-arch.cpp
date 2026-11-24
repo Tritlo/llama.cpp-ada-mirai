@@ -255,6 +255,7 @@ static const std::map<llm_kv, const char *> LLM_KV_NAMES = {
     { LLM_KV_INTERLEAVE_MOE_LAYER_STEP,              "%s.interleave_moe_layer_step"              },
     { LLM_KV_FULL_ATTENTION_INTERVAL,                "%s.full_attention_interval"                },
     { LLM_KV_NUM_LOOPS,                              "%s.num_loops"                              },
+    { LLM_KV_RECURRENT_KV_CACHE_MODE,                "%s.recurrent_kv_cache_mode"                },
     { LLM_KV_ATTENTION_LOG_SCALE_ALPHA,              "%s.attention.log_scale_alpha"              },
     { LLM_KV_ATTENTION_LOG_SCALE_FLOOR,              "%s.attention.log_scale_floor"              },
     { LLM_KV_ATTENTION_QK_CLIP,                      "%s.attention.qk_clip"                      },

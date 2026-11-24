@@ -93,6 +93,15 @@ void llama_model_inkling2::load_arch_hparams(llama_model_loader & ml) {
         throw std::runtime_error("inkling2: invalid logarithmic scale");
     }
 
+    std::string kv_mode = "per_loop";
+    ml.get_key(LLM_KV_RECURRENT_KV_CACHE_MODE, kv_mode, false);
+    if (kv_mode != "per_loop" && kv_mode != "last_loop") {
+        throw std::runtime_error("inkling2: unknown recurrent_kv_cache_mode: " + kv_mode);
+    }
+    hparams.loop_last_kv = kv_mode == "last_loop";
+    if (hparams.loop_last_kv && hparams.loop_n_pass < 2) {
+        throw std::runtime_error("inkling2: last_loop KV requires a looped checkpoint");
+    }
     if (hparams.loop_n_pass > 1) {
         ml.get_key(LLM_KV_LOOP_GATE_RANK, hparams.loop_gate_rank);
         if (!hparams.loop_core_start || !hparams.loop_gate_rank || hparams.loop_core_start % hparams.attn_res_block_size ||
